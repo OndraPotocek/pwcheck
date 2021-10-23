@@ -1,43 +1,35 @@
 #include <stdio.h>
 
+# define LEVEL 4
+# define PARAM 3
+
+int containsLowAndUpperCharacter(char pw[]){
+    for(int i=0;i!='\0';i++){
+        
+    }
+    return 1; 
+}
 
 int main(){
-    char lowCaseEndCharacter[100] = "end";
-    char upperCaseEndCharacter[3] = "END";
-    int leaveingCharcker = 0;
-    char password[100];
-
-    printf("--------------------------------------------------\nWelcome to password checker program\nfor exit type END in any part of this program\n--------------------------------------------------\n");
-    
-
-    
-    while(leaveingCharcker == 0){
-        printf("password: ");
-        scanf("%s", password);
-
-        if (areEquals(password,lowCaseEndCharacter) == 1 || areEquals(password,upperCaseEndCharacter) == 1) return 1;
-
         
+    const char passwords[] = "heslo\ndelsiheslo\nhesloscislemtreba123\nhesloscislem5aspecialnimznakem;";
+    char pw[100];
+    int pointer = 0;
 
-        
-        
-    }
-    
-}
-
-int areEquals(char str1[],char str2[]){
-    int chacker=0,i=0;
-
-    while(str1[i]!='\0' && str2[i]!='\0'){
-        if(str1[i]!=str2[i]){
-            chacker = 1;
-            break;
+    for(int counter = 0; counter< sizeof passwords/ sizeof passwords[0]; counter++){
+        if (passwords[counter]!='\n' || passwords[counter]!='\0'){
+            pw[pointer] += passwords[counter];
+            pointer+=1;
         }
-        i++;
 
+        else{
+            printf("%s", pw);
+            pointer = 0;
+        }
+        
     }
-
-    if(chacker == 0) return 1;
-    else return 0;
+    
+    
+    
+    return 0;
 }
-
