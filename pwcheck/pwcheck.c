@@ -2,33 +2,8 @@
 #include <stdbool.h>
 
 
-#define LEVEL 3
-#define PARAM 3
-
-bool areEquals(char word1[], char word2[]){
-    
-    int chacker=0,i=0;
-
-    while(word1[i]!='\0' || word2[i]!='\0'){
-        if(word1[i]!=word2[i]){
-            chacker = 1;
-            break;
-        }
-        i++;
-
-    }
-
-    if(chacker == 0){
-        return true;
-    }
-    else{
-        return false;
-    }
 
 
-        
-    
-}
 
 int containsLowAndUpperCharacter(char word[]){
     bool lowCharacer=false;
@@ -114,21 +89,49 @@ bool notContainsSameChars(char word[], int param){
 
 }
 
-int notContainsSameStrings(char word[], int param){
+bool notContainsSameStrings(char word[], int param){
     if(param == 1){
         return true;
     }
     if(param == 2){
         for(int i = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
             if(word[i]=='\0'){break;}
-            for(int j = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
-                
+            for(int j = (i + 1); j<sizeof(word)/sizeof(word[0])+param; j++){
+                if(word[j]=='\0'){break;}
+                if(word[i]==word[j]){
+                    if(word[i+1]==word[j+1]){return false;}
+                }
             }
         }
     }
+    if(param == 3){
+        for(int i = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
+            if(word[i]=='\0'){break;}
+            for(int j = (i + j); j<sizeof(word)/sizeof(word[0])+param; j++){
+                if(word[j]=='\0'){break;}
+                if(word[i]==word[j]){
+                    if(word[i+1]==word[j+1] && word[i+2 == word[j+2]]){return false;}
+                }
+            }
+        }
+    }
+    if(param == 4){
+        for(int i = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
+            if(word[i]=='\0'){break;}
+            for(int j = (i + 1); j<sizeof(word)/sizeof(word[0])+param; j++){
+                if(word[j]=='\0'){break;}
+                if(word[i]==word[j]){
+                    if(word[i+1]==word[j+1] && word[i+2] == word[j+2] && word[i+3] == word[j+3]){return false;}
+                }
+            }
+        }
+    }
+    return true;
 }
 
 int main(int argc, char const *argv[]){
+    int LEVEL = atoi(argv[1]);
+    int PARAM = atoi(argv[2]);
     char pw[101];
     while(fgets(pw, 101, stdin) != NULL){
         if(LEVEL == 1 && containsLowAndUpperCharacter(pw) == 1){
@@ -140,7 +143,7 @@ int main(int argc, char const *argv[]){
         if(LEVEL == 3 && containsLowAndUpperCharacter(pw) == 1 && havingRightCharset(pw, PARAM) == 1 && notContainsSameChars(pw, PARAM)){
             printf("%s", pw);
         }
-        if(LEVEL == 4 && containsLowAndUpperCharacter(pw) == 1 && havingRightCharset(pw, PARAM) == 1 && notContainsSameChars(pw, PARAM)){
+        if(LEVEL == 4 && containsLowAndUpperCharacter(pw) == 1 && havingRightCharset(pw, PARAM) == 1 && notContainsSameChars(pw, PARAM) && notContainsSameStrings(pw, PARAM)){
             printf("%s", pw);
         }
     }
