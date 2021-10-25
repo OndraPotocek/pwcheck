@@ -92,19 +92,19 @@ bool notContainsSameChars(char word[], int param){
         return true;
     }
     if(param==2){
-        for(int i = 0; i < sizeof(word)/sizeof(word[0]+param); i++){
+        for(int i = 0; i < sizeof(word)/sizeof(word[0])+param; i++){
             if(word[i]=='\0'){break;}
             if(word[i]==word[i+1]){return false;}
         }
     }
     if(param==3){
-        for(int i = 0; i < sizeof(word)/sizeof(word[0]+param); i++){
+        for(int i = 0; i < sizeof(word)/sizeof(word[0])+param; i++){
             if(word[i]=='\0'){break;}
             if(word[i]==word[i+1]&&word[i]==word[i+2]){return false;}
         }
     }
     if(param==4){
-        for(int i = 0; i < sizeof(word)/sizeof(word[0]+param); i++){
+        for(int i = 0; i < sizeof(word)/sizeof(word[0])+param; i++){
             if(word[i]=='\0'){break;}
             if(word[i]==word[i+1]&&word[i]==word[i+2]&&word[i]==word[i+3]){return false;}
         }
@@ -114,9 +114,19 @@ bool notContainsSameChars(char word[], int param){
 
 }
 
-/*int notContainsSameStrings(char word[], int param){
-
-}*/
+int notContainsSameStrings(char word[], int param){
+    if(param == 1){
+        return true;
+    }
+    if(param == 2){
+        for(int i = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
+            if(word[i]=='\0'){break;}
+            for(int j = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
+                
+            }
+        }
+    }
+}
 
 int main(int argc, char const *argv[]){
     char pw[101];
