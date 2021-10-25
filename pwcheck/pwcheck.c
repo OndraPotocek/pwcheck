@@ -1,21 +1,47 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 
 #define LEVEL 3
-#define PARAM 2
+#define PARAM 3
+
+bool areEquals(char word1[], char word2[]){
+    
+    int chacker=0,i=0;
+
+    while(word1[i]!='\0' || word2[i]!='\0'){
+        if(word1[i]!=word2[i]){
+            chacker = 1;
+            break;
+        }
+        i++;
+
+    }
+
+    if(chacker == 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+
+        
+    
+}
 
 int containsLowAndUpperCharacter(char word[]){
-    int lowCharacerCounter = 0;
-    int upperCharacterCounter = 0;
+    bool lowCharacer=false;
+    bool upperCharacter = false;
     for(int i = 0;i<sizeof(word)/sizeof(word[0]);i++){
         if(word[i] >= 'a' && word[i] <='z'){
-            lowCharacerCounter+=1;
+            lowCharacer=true;
         }
         if(word[i] >= 'A' && word[i] <='Z'){
-            upperCharacterCounter+=1;
+            upperCharacter=true;
         }
     } 
-    if(lowCharacerCounter > 0 && upperCharacterCounter >0){
+    if(lowCharacer && upperCharacter){
         return 1;
     }   
     else{
@@ -24,58 +50,68 @@ int containsLowAndUpperCharacter(char word[]){
 }
 
 int havingRightCharset(char word[], int param){
-    int lowFound=0,upperFound=0,numFound=0,specFound=0;
+    int checker = 0;
+    bool lowNO=true,upNO=true,numNO=true,specNO=true;
     for(int i = 0;i<sizeof(word)/sizeof(word[0]);i++){
-        if(word[i] >= 'a' && word[i] <='z'){
-            lowFound+=1;
+        if(word[i] >= 'a' && word[i] <='z' && lowNO){
+            checker+=1;
+            lowNO=false;
         }
-        if(word[i] >= 'A' && word[i] <='Z'){
-            upperFound+=1;
+        if(word[i] >= 'A' && word[i] <='Z' && upNO){
+            checker+=1;
+            upNO=false;
         }
-        if(word[i] >= '0' && word[i] <='9'){
-            numFound+=1;
+        if(word[i] >= '0' && word[i] <='9' && numNO){
+            checker+=1;
+            numNO=false;
         }
-        if((word[i] >= 32 && word[i] <= 47)&&(word[i] >= 58 && word[i] <= 64)&&(word[i] >= 91 && word[i] <= 96)&&(word[i] >= 123 && word[i] <= 126)){
-            specFound+=1;
-        }
-    }
-    if(param <= 1){
-        if(lowFound>0){
-            return 1;
-        }
-    }
-    if(param == 2){
-        if(lowFound>0 && upperFound>0){
-            return 1;
+        if((word[i] >= 32 && word[i] <= 47) || (word[i] >= 58 && word[i] <= 64) || (word[i] >= 91 && word[i] <= 96) || (word[i] >= 123 && word[i] <= 126) && specNO){
+            checker+=1;
+            specNO=false;
         }
     }
-    if(param == 3){
-        if(lowFound>0 && upperFound>0 && numFound>0){
-            return 1;
-        }
+    if(param == 1 && checker>=1){
+        return 1;
     }
-    if(param >= 4){
-        if(lowFound>0 && upperFound>0 && numFound>0 && specFound>0){
-            return 1;
-        }
-    } 
+    if(param == 2 && checker>=2){
+        return 1;
+    }
+    if(param == 3 && checker>=3){
+        return 1;
+    }
+    if(param == 4 && checker>=4){
+        return 1;
+    }
+    
+    
     return 0;
 } 
 
-int notContainsSameChars(char word[], int param){
-    int helper = 0;
-    if(param == 1){
-        return 1;
+bool notContainsSameChars(char word[], int param){
+    if(param==1){
+        return true;
     }
-    for(int i = 1;i<(sizeof(word)/sizeof(word[0]))+1;i++){
-        if(word[i] == word[i-1]){
-            helper+=1;
-        }
-        if(helper == param){
-            return 0;
+    if(param==2){
+        for(int i = 0; i < sizeof(word)/sizeof(word[0]+param); i++){
+            if(word[i]=='\0'){break;}
+            if(word[i]==word[i+1]){return false;}
         }
     }
-    return 1;
+    if(param==3){
+        for(int i = 0; i < sizeof(word)/sizeof(word[0]+param); i++){
+            if(word[i]=='\0'){break;}
+            if(word[i]==word[i+1]&&word[i]==word[i+2]){return false;}
+        }
+    }
+    if(param==4){
+        for(int i = 0; i < sizeof(word)/sizeof(word[0]+param); i++){
+            if(word[i]=='\0'){break;}
+            if(word[i]==word[i+1]&&word[i]==word[i+2]&&word[i]==word[i+3]){return false;}
+        }
+    }   
+    return true;
+    
+
 }
 
 /*int notContainsSameStrings(char word[], int param){
