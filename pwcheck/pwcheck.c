@@ -89,6 +89,53 @@ bool notContainsSameChars(char word[], int param){
 
 }
 
+int wordNChars(char pw[], char chars[]){
+    bool newchar = true;
+    int pointer = 0;
+    int nChar = 0;
+    for(int i = 0;i<sizeof(pw)/sizeof(pw[0]);i++){
+        for(int j = 0; pw[j]!='\0';j++){
+            if(pw[i] == chars[j]){
+                newchar = false;
+                pointer = j;
+                break;
+            }
+            
+        }
+        if(newchar){
+            chars[pointer] = pw[i];
+            nChar+=1;
+        }
+    }
+    return nChar;
+}
+
+int minimal(char pw[], int previousLength){
+    int currentLenght = 0;
+    for(int i = 0;i<sizeof(pw)/sizeof(pw[0]);i++){
+        currentLenght++;
+    }
+    if(currentLenght<previousLength){
+        return currentLenght;
+    }
+    else{
+        return previousLength;
+    }
+}
+
+int maximal(char pw[], int previousLength){
+    int currentLength = 0;
+    for(int i = 0;i<sizeof(pw)/sizeof(pw[0]);i++){
+        currentLength++;
+    }
+    if(currentLength>previousLength){
+        return currentLength;
+    }
+    else{
+        return previousLength;
+    }
+}
+
 
 bool notContainsSameStrings(char pw[], int delka)
 {
@@ -148,8 +195,11 @@ bool notContainsSameStrings(char pw[], int delka)
 int main(int argc, char const *argv[]){
     int LEVEL = atoi(argv[1]);
     int PARAM = atoi(argv[2]);
+    int nChars = 0;
+    int min = 101;
+    int max = 0;
     char pw[101];
-    char chars[COUNT_OF_ASCII];
+    char chars[COUNT_OF_ASCII] = {0};
     while(fgets(pw, 101, stdin) != NULL){
         if(LEVEL == 1 && containsLowAndUpperCharacter(pw) == 1){
             printf("%s", pw);
@@ -164,9 +214,12 @@ int main(int argc, char const *argv[]){
             printf("%s", pw);
         }
 
-        
+        nChars+=wordNChars(pw,chars);
+        min = minimal(pw,min);
     }
 
+    printf("\nNCHAR: %d\nMinimalni delka: %d\nMaximalni delka: %d", nChars);
+    
 
 
 
