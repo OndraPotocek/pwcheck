@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
+#define COUNT_OF_ASCII 100
 
 
 
@@ -89,50 +89,67 @@ bool notContainsSameChars(char word[], int param){
 
 }
 
-bool notContainsSameStrings(char word[], int param){
-    if(param == 1){
-        return true;
-    }
-    if(param == 2){
-        for(int i = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
-            if(word[i]=='\0'){break;}
-            for(int j = (i + 1); j<sizeof(word)/sizeof(word[0])+param; j++){
-                if(word[j]=='\0'){break;}
-                if(word[i]==word[j]){
-                    if(word[i+1]==word[j+1]){return false;}
-                }
-            }
-        }
-    }
-    if(param == 3){
-        for(int i = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
-            if(word[i]=='\0'){break;}
-            for(int j = (i + j); j<sizeof(word)/sizeof(word[0])+param; j++){
-                if(word[j]=='\0'){break;}
-                if(word[i]==word[j]){
-                    if(word[i+1]==word[j+1] && word[i+2 == word[j+2]]){return false;}
-                }
-            }
-        }
-    }
-    if(param == 4){
-        for(int i = 0; i<sizeof(word)/sizeof(word[0])+param; i++){
-            if(word[i]=='\0'){break;}
-            for(int j = (i + 1); j<sizeof(word)/sizeof(word[0])+param; j++){
-                if(word[j]=='\0'){break;}
-                if(word[i]==word[j]){
-                    if(word[i+1]==word[j+1] && word[i+2] == word[j+2] && word[i+3] == word[j+3]){return false;}
-                }
-            }
-        }
-    }
-    return true;
-}
 
+bool notContainsSameStrings(char pw[], int delka)
+{
+    bool stejnePodretezce = true;
+    switch (delka)
+    {
+        case 1: stejnePodretezce = false;
+        case 2:
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    if (pw[i] == '\0')break;
+                    for (int j = (1 + i); j < 100; j++)
+                    {
+                        if (pw[i] == pw[j])
+                        {
+                            if (pw[i+1] == pw[j+1]) stejnePodretezce = false;
+                        }
+                    }
+                }
+                break;
+            }
+        case 3:
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    if (pw[i] == '\0')break;
+                    for (int j = (1 + i); j < 100; j++)
+                    {
+                        if (pw[i] == pw[j])
+                        {
+                            if ((pw[i+1] == pw[j+1]) && (pw[i+2] == pw[j+2]))stejnePodretezce = false;
+                        }
+                    }
+                }
+                break;
+            }
+
+        case 4:
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    if (pw[i] == '\0')break;
+                    for (int j = (1 + i); j < 100; j++)
+                    {
+                        if (pw[i] == pw[j])
+                        {
+                            if ((pw[i+1] == pw[j+1]) && (pw[i+2] == pw[j+2]) && (pw[i+3] == pw[j+3]))stejnePodretezce = false;
+                        }
+                    }
+                }
+                break;
+            }
+    }
+    return stejnePodretezce;
+}
 int main(int argc, char const *argv[]){
     int LEVEL = atoi(argv[1]);
     int PARAM = atoi(argv[2]);
     char pw[101];
+    char chars[COUNT_OF_ASCII];
     while(fgets(pw, 101, stdin) != NULL){
         if(LEVEL == 1 && containsLowAndUpperCharacter(pw) == 1){
             printf("%s", pw);
@@ -146,7 +163,13 @@ int main(int argc, char const *argv[]){
         if(LEVEL == 4 && containsLowAndUpperCharacter(pw) == 1 && havingRightCharset(pw, PARAM) == 1 && notContainsSameChars(pw, PARAM) && notContainsSameStrings(pw, PARAM)){
             printf("%s", pw);
         }
+
+        
     }
+
+
+
+
     
     
     return 0;
