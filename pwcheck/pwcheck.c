@@ -90,42 +90,44 @@ bool notContainsSameChars(char word[], int param){
 }
 
 int wordNChars(char pw[], char chars[]){
-    bool newchar = true;
+    int newChar = true;
+    int newCharsCounter = 0;
     int pointer = 0;
-    int nChar = 0;
-    for(int i = 0;i<sizeof(pw)/sizeof(pw[0]);i++){
-        for(int j = 0; pw[j]!='\0';j++){
-            if(pw[i] == chars[j]){
-                newchar = false;
-                pointer = j;
+    for(int i = 0;pw[i]!='\0';i++){
+        for(int j = 0;chars[j]!=0;j++){
+            pointer = j;
+            if(pw[i]==chars[j]){
+                newChar = false;
                 break;
             }
+        }
+        if(newChar){
+            newCharsCounter++;
+            chars[pointer] = pw[i];
             
         }
-        if(newchar){
-            chars[pointer] = pw[i];
-            nChar+=1;
-        }
+        newChar = true;
     }
-    return nChar;
 }
 
 int minimal(char pw[], int previousLength){
-    int currentLenght = 0;
-    for(int i = 0;i<sizeof(pw)/sizeof(pw[0]);i++){
-        currentLenght++;
+    int currentLength = 0;
+    for(int i = 1;pw[i]!='\0';i++){
+        currentLength++;
     }
-    if(currentLenght<previousLength){
-        return currentLenght;
+    if(currentLength<previousLength){
+        return currentLength;
     }
     else{
         return previousLength;
     }
+
+    
 }
 
 int maximal(char pw[], int previousLength){
     int currentLength = 0;
-    for(int i = 0;i<sizeof(pw)/sizeof(pw[0]);i++){
+    for(int i = 1;pw[i]!='\0';i++){
         currentLength++;
     }
     if(currentLength>previousLength){
@@ -197,10 +199,15 @@ int main(int argc, char const *argv[]){
     int PARAM = atoi(argv[2]);
     int nChars = 0;
     int min = 101;
+    int currentLength = 0;
     int max = 0;
     char pw[101];
     char chars[COUNT_OF_ASCII] = {0};
     while(fgets(pw, 101, stdin) != NULL){
+        min = minimal(pw, min);
+        max = maximal(pw, max);
+        nChars+=wordNChars(pw, chars);
+
         if(LEVEL == 1 && containsLowAndUpperCharacter(pw) == 1){
             printf("%s", pw);
         }
@@ -214,11 +221,10 @@ int main(int argc, char const *argv[]){
             printf("%s", pw);
         }
 
-        nChars+=wordNChars(pw,chars);
-        min = minimal(pw,min);
+        
     }
 
-    printf("\nNCHAR: %d\nMinimalni delka: %d\nMaximalni delka: %d", nChars);
+    printf("\nNCHAR: %d\nMinimalni delka: %d\nMaximalni delka: %d", nChars,min,max);
     
 
 
