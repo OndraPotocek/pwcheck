@@ -5,16 +5,16 @@
 #define COUNT_OF_ASCII 100
 
 
-
+// First condition (LVL 1) - checking if password contains at least one upper and one lower character
 bool containsLowAndUpperCharacter(char word[]){
     bool lowCharacer=false;
     bool upperCharacter = false;
     for(int i = 0;i<(sizeof(word)/sizeof(word[0]))+COUNT_OF_ASCII;i++){
         if(word[i] >= 'a' && word[i] <='z'){
             lowCharacer=true;
-        }
+        }                       
         if(word[i] >= 'A' && word[i] <='Z'){
-            upperCharacter=true;
+            upperCharacter=true;             
         }
     } 
     if(lowCharacer && upperCharacter){
@@ -25,6 +25,7 @@ bool containsLowAndUpperCharacter(char word[]){
     }
 }
 
+// Second condition (LVL 2) - this function is true if entered word contains characters at least PARAM groupes
 bool havingRightCharset(char word[], int param){
     int low = 0, up = 0, num = 0, spec = 0;
     bool foundLow = false, foundUp = false, foundNum = false, foundSpec = false;
@@ -36,7 +37,7 @@ bool havingRightCharset(char word[], int param){
             low = 1;
             
         }
-        if(word[i] >= 'A' && word[i] <='Z'){
+        if(word[i] >= 'A' && word[i] <='Z'){    // When entered word which contains number or lower, upper or special character, then relevant counter is set to 1  
             up = 1;
             
         }
@@ -51,7 +52,7 @@ bool havingRightCharset(char word[], int param){
         if(param == 1 && low + up + num + spec >= 1){
             return true;
         }
-        if(param == 2 && low + up + num + spec >= 2){
+        if(param == 2 && low + up + num + spec >= 2){ // when low + up + num + spec > 2, word contains character from 3 or 4 groups
             return true;
         }
         if(param == 3 && low + up + num + spec >= 3){
@@ -67,6 +68,7 @@ bool havingRightCharset(char word[], int param){
     
 } 
 
+// Third condition (LVL 3) - this function returns true if word doesn't contain PARAM characters next to each other
 bool notContainsSameChars(char word[], int param){
     if(param==1){
         return true;
@@ -94,34 +96,15 @@ bool notContainsSameChars(char word[], int param){
 
 }
 
-int wordNChars(char pw[], char chars[]){
-    int newChar = true;
-    int newCharsCounter = 0;
-    int pointer = 0;
-    for(int i = 0;pw[i]!='\0';i++){
-        for(int j = 0;chars[j]!=0;j++){
-            pointer = j;
-            if(pw[i]==chars[j]){
-                newChar = false;
-                break;
-            }
-        }
-        if(newChar){
-            newCharsCounter++;
-            chars[pointer] = pw[i];
-            
-        }
-        newChar = true;
-    }
-}
+
 
 int minimal(char pw[], int previousLength){
     int currentLength = 0;
-    for(int i = 1;pw[i]!='\0';i++){
+    for(int i = 1;pw[i]!='\0';i++){  //length or every password
         currentLength++;
     }
     if(currentLength<previousLength){
-        return currentLength;
+        return currentLength;           
     }
     else{
         return previousLength;
@@ -130,20 +113,9 @@ int minimal(char pw[], int previousLength){
     
 }
 
-int maximal(char pw[], int previousLength){
-    int currentLength = 0;
-    for(int i = 1;pw[i]!='\0';i++){
-        currentLength++;
-    }
-    if(currentLength>previousLength){
-        return currentLength;
-    }
-    else{
-        return previousLength;
-    }
-}
 
 
+// Fourth condition (LVL 4) checking if password doesn't contain same substrings with the lenght of PARAM 
 bool notContainsSameStrings(char word[], int param){
     bool notsamestrings = true;
         
@@ -253,13 +225,14 @@ int main(int argc, char const *argv[]){
             printf("\n%s", pw);
         }
         
+        
         int i = 0;
         while(pw[i] != '\0'){
             allCount++;
             i++;
         }
         
-
+        //counting NCHARS
         for (int i = 0; i < COUNT_OF_ASCII; i++){
             if (pw[i] == '\0') {
                 break;
